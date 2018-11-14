@@ -19,6 +19,33 @@ public class PaymentProcessorTest {
         paymentProcessor = null;
     }
 
+    @Test
+    public void TestOffLineVerification(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "5555555555554444", "8/19", "875");
+
+        int result = paymentProcessor.verifyOffLine(ccInfo);
+
+        assertEquals(0, result);
+    }
+
+    @Test
+    public void TestOffLineVerificationEmptyCardDetails(){
+        CCInfo ccInfo = new CCInfo("", "", "", "", "", "");
+
+        int result = paymentProcessor.verifyOffLine(ccInfo);
+
+        assertEquals(1, result);
+    }
+
+    @Test
+    public void TestOffLineVerificationIncorrectLuhnVerify(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "5555555555554443", "8/19", "875");
+
+        int result = paymentProcessor.verifyOffLine(ccInfo);
+
+        assertEquals(2, result);
+    }
+
 //    @Test
 //    public void TestMasterCardCorrect() {
 //        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "5555555555554444", "8/19", "875");
