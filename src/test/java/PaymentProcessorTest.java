@@ -20,7 +20,7 @@ public class PaymentProcessorTest {
     }
 
     @Test
-    public void TestOffLineVerification(){
+    public void TestOffLineVerification() {
         CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "5555555555554444", "8/19", "875");
 
         int result = paymentProcessor.verifyOffLine(ccInfo);
@@ -29,7 +29,7 @@ public class PaymentProcessorTest {
     }
 
     @Test
-    public void TestOffLineVerificationEmptyCardDetails(){
+    public void TestOffLineVerificationEmptyCardDetails() {
         CCInfo ccInfo = new CCInfo("", "", "", "", "", "");
 
         int result = paymentProcessor.verifyOffLine(ccInfo);
@@ -38,12 +38,92 @@ public class PaymentProcessorTest {
     }
 
     @Test
-    public void TestOffLineVerificationIncorrectLuhnVerify(){
+    public void TestOffLineVerificationIncorrectLuhnVerify() {
         CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "5555555555554443", "8/19", "875");
 
         int result = paymentProcessor.verifyOffLine(ccInfo);
 
         assertEquals(2, result);
+    }
+
+    @Test
+    public void TestingPrefixIncorrect() {
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "30569309025904", "8/19", "875");
+
+        int result = paymentProcessor.verifyOffLine(ccInfo);
+
+        assertEquals(3, result);
+    }
+
+    @Test
+    public void TestMasterCardCorrectPrefix() {
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "5555555555554444", "8/19", "875");
+
+        int result = paymentProcessor.verifyOffLine(ccInfo);
+
+        assertEquals(0, result);
+    }
+    @Test
+    public void TestVisaCardCorrectPrefix() {
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Visa", "4111111111111111", "8/19", "875");
+
+        int result = paymentProcessor.verifyOffLine(ccInfo);
+
+        assertEquals(0, result);
+    }
+
+    @Test
+    public void TestAmericanExpressCorrectPrefix() {
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "American Express", "378282246310005", "8/19", "875");
+
+        int result = paymentProcessor.verifyOffLine(ccInfo);
+
+        assertEquals(0, result);
+    }
+
+    @Test
+    public void TestDateExpiryWithCardExpired(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "American Express", "378282246310005", "6/19", "875");
+
+        boolean result = paymentProcessor.checkExpiryDate("7/19", ccInfo.cardExpiryDate);
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void TestDateExpiryWithCardInTheFuture(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "American Express", "378282246310005", "8/19", "875");
+
+        boolean result = paymentProcessor.checkExpiryDate("7/19", ccInfo.cardExpiryDate);
+
+        assertFalse(result);
+    }
+
+    @Test
+    public void TestDateExpiryWithCardofSameDate(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "American Express", "378282246310005", "8/19", "875");
+
+        boolean result = paymentProcessor.checkExpiryDate("8/19", ccInfo.cardExpiryDate);
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void TestDateExpiryWithCardInTheFutureYear(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "American Express", "378282246310005", "8/22", "875");
+
+        boolean result = paymentProcessor.checkExpiryDate("7/19", ccInfo.cardExpiryDate);
+
+        assertFalse(result);
+    }
+
+    @Test
+    public void TestDateExpiryWithCardInThePastYear(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "American Express", "378282246310005", "8/17", "875");
+
+        boolean result = paymentProcessor.checkExpiryDate("7/19", ccInfo.cardExpiryDate);
+
+        assertTrue(result);
     }
 
 //    @Test
@@ -107,32 +187,5 @@ public class PaymentProcessorTest {
 //        int result = paymentProcessor.processPayment(ccInfo, 100);
 //
 //        assertEquals(1, result);
-//    }
-//
-//    @Test
-//    public void TestEmptyCCInfo() {
-//        CCInfo ccInfo = new CCInfo("", "", "", "", "", "");
-//
-//        int result = paymentProcessor.processPayment(ccInfo, 100);
-//
-//        assertEquals(1, result);
-//    }
-//
-//    @Test
-//    public void TestingPrefixIncorrect() {
-//        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "30569309025904", "8/19", "875");
-//
-//        int result = paymentProcessor.processPayment(ccInfo, 100);
-//
-//        assertEquals(1, result);
-//    }
-//
-//    @Test
-//    public void TestMasterCardPrefix() {
-//        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "5555555555554444", "8/19", "875");
-//
-//        int result = paymentProcessor.verifyOffLine(ccInfo);
-//
-//        assertEquals(-1,result);
 //    }
 }
