@@ -2,40 +2,33 @@ public class PaymentProcessor {
 
     public int verifyOffLine(CCInfo ccInfo) {
         if (!checkIfInfoIsEmpty(ccInfo)) {
-            System.out.println("Some of the card details are missing");
+            System.out.println("Some of the card details are missing.");
             return 1;
         }
         if (!verifyLuhn(ccInfo.cardNumber)) {
-            System.out.println("The Card Number cannot be verified by the Luhn Algorithm");
+            System.out.println("The Card Number cannot be verified by the Luhn Algorithm.");
             return 2;
         }
         if (!verifyPrefix(ccInfo)) {
+            System.out.println("The Card Number prefix does not correspond to the Card Type.");
             return 3;
+        }
+        if (checkExpiryDate("11/18", ccInfo.cardExpiryDate)) {
+            System.out.println("The Card Expiry Date must be in the future.");
+            return 4;
         }
         return 0;
     }
 
-    //    public int processPayment(CCInfo ccInfo, long transID){
-//        if(verifyOffLine(ccInfo) == -1)
-//            return 1;
-//        return 0;
-//    }
-//
-//    public int verifyOffLine(CCInfo ccInfo){
-//        // check if CCInfo the details are not empty.
-//        if(!checkIfInfoIsEmpty(ccInfo))
-//            return -1;
-//        // Luhn Algorithm
-//        if(!verifyLuhn(ccInfo.cardNumber))
-//            return -1;
-//        // verify prefix and card type match
-//        if(!verifyPrefix(ccInfo))
-//            return -1;
-//        //verify date
-//
-//        return 0;
-//    }
-//
+    public int processPayment(CCInfo ccInfo, long transID) {
+        //Checks that the card is verified and that it is store in the transaction database
+        if (verifyOffLine(ccInfo) != 0) {
+            System.out.println("The Verification of the Card has not ended successfully.");
+            return 1;
+        }
+        return 0;
+    }
+
     // return true if it is expired
     public boolean checkExpiryDate(String today, String expire) {
         String todayMonth = today.substring(0, today.indexOf('/'));

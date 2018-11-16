@@ -109,6 +109,15 @@ public class PaymentProcessorTest {
     }
 
     @Test
+    public void TestDateExpiryWithCardInTheFutureYear1(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "American Express", "378282246310005", "8/23", "875");
+
+        boolean result = paymentProcessor.checkExpiryDate("7/19", ccInfo.cardExpiryDate);
+
+        assertFalse(result);
+    }
+
+    @Test
     public void TestDateExpiryWithCardInTheFutureYear(){
         CCInfo ccInfo = new CCInfo("XYZ", "ABC", "American Express", "378282246310005", "8/22", "875");
 
