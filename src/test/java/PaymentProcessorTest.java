@@ -144,7 +144,15 @@ public class PaymentProcessorTest {
         int result = paymentProcessor.verifyOffLine(ccInfo);
         assertEquals(4,result);
     }
-    
+
+
+    @Test
+    public void TestProcessPaymentFailOffLineVerification(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "American Express", "378282246310005", "8/17", "875");
+
+        int result = paymentProcessor.processPayment(ccInfo, 201);
+        assertEquals(1,result);
+    }
 //    @Test
 //    public void TestMasterCardCorrect() {
 //        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "5555555555554444", "8/19", "875");
