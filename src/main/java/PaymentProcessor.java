@@ -1,5 +1,16 @@
 public class PaymentProcessor {
 
+    String dateToday;
+
+    PaymentProcessor() {
+        this.dateToday = "11/18";
+    }
+
+    PaymentProcessor(String dateToday) {
+        this.dateToday = dateToday;
+    }
+
+
     public int verifyOffLine(CCInfo ccInfo) {
         if (!checkIfInfoIsEmpty(ccInfo)) {
             System.out.println("Some of the card details are missing.");
@@ -13,7 +24,7 @@ public class PaymentProcessor {
             System.out.println("The Card Number prefix does not correspond to the Card Type.");
             return 3;
         }
-        if (checkExpiryDate("11/18", ccInfo.cardExpiryDate)) {
+        if (checkExpiryDate(dateToday, ccInfo.cardExpiryDate)) {
             System.out.println("The Card Expiry Date must be in the future.");
             return 4;
         }
