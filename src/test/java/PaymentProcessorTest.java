@@ -153,6 +153,115 @@ public class PaymentProcessorTest {
         int result = paymentProcessor.processPayment(ccInfo, 201);
         assertEquals(1,result);
     }
+
+    @Test
+    public void TestCardNumberWithLengthFifteenAmericanExpress(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "American Express", "378282246310005", "8/17", "875");
+
+        boolean result = paymentProcessor.verifyprefixandlength(ccInfo);
+
+        assertTrue(result);
+
+    }
+
+    @Test
+    public void TestCardNumberWithLengthSixteenMastercard(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "5555555555554444", "8/19", "875");
+
+        boolean result = paymentProcessor.verifyprefixandlength(ccInfo);
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void TestCardNumberWithLengthSixteenVISA(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Visa", "4111111111111111", "8/19", "875");
+
+        boolean result = paymentProcessor.verifyprefixandlength(ccInfo);
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void TestCardNumberWithLengthThirteenVISA(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Visa", "4111111111111", "8/19", "875");
+
+        boolean result = paymentProcessor.verifyprefixandlength(ccInfo);
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void TestCardNumberLengthLessThanFifteenAmericanExpress(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "American Express", "378282", "8/17", "875");
+
+        boolean result = paymentProcessor.verifyprefixandlength(ccInfo);
+
+        assertFalse(result);
+    }
+
+    @Test
+    public void TestCardNumberLengthGreaterThanFifteenAmericanExpress(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "American Express", "37828232323131231231223", "8/17", "875");
+
+        boolean result = paymentProcessor.verifyprefixandlength(ccInfo);
+
+        assertFalse(result);
+    }
+
+    @Test
+    public void TestCardNumberLengthLessThanSixteenMastercard(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "54767", "8/19", "875");
+
+        boolean result = paymentProcessor.verifyprefixandlength(ccInfo);
+
+        assertFalse(result);
+    }
+
+    @Test
+    public void TestCardNumberLengthGreaterThanSixteenMastercard(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "54767362763273236278323627362736821188238213", "8/19", "875");
+
+        boolean result = paymentProcessor.verifyprefixandlength(ccInfo);
+
+        assertFalse(result);
+    }
+
+    @Test
+    public void TestCardNumberWithLengthLessThanSixteenVISA(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Visa", "411", "8/19", "875");
+
+        boolean result = paymentProcessor.verifyprefixandlength(ccInfo);
+
+        assertFalse(result);
+    }
+
+    @Test
+    public void TestCardNumberWithLengthGreaterThanSixteenVISA(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Visa", "411111131231231312331231313123131231111111111", "8/19", "875");
+
+        boolean result = paymentProcessor.verifyprefixandlength(ccInfo);
+
+        assertFalse(result);
+    }
+
+    @Test
+    public void TestCardNumberWithLengthLessThanThirteenVISA(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Visa", "411", "8/19", "875");
+
+        boolean result = paymentProcessor.verifyprefixandlength(ccInfo);
+
+        assertFalse(result);
+    }
+
+    @Test
+    public void TestCardNumberWithLengthGreaterThanThirteenVISA(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Visa", "411131231223123123123131232131231232132131", "8/19", "875");
+
+        boolean result = paymentProcessor.verifyprefixandlength(ccInfo);
+
+        assertFalse(result);
+    }
 //    @Test
 //    public void TestMasterCardCorrect() {
 //        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "5555555555554444", "8/19", "875");

@@ -28,7 +28,7 @@ public class PaymentProcessor {
             System.out.println("The Card Number cannot be verified by the Luhn Algorithm.");
             return 2;
         }
-        if (!verifyPrefix(ccInfo)) {
+        if (!verifyprefixandlength(ccInfo)) {
             System.out.println("The Card Number prefix does not correspond to the Card Type.");
             return 3;
         }
@@ -123,13 +123,13 @@ public class PaymentProcessor {
         return digit.substring(digit.length() - 1);
     }
 
-    private boolean verifyPrefix(CCInfo ccInfo) {
-        if (ccInfo.cardType.equals("American Express") && (ccInfo.cardNumber.startsWith("34") || ccInfo.cardNumber.startsWith("37")))
+    public boolean verifyprefixandlength(CCInfo ccInfo) {
+        if (ccInfo.cardType.equals("American Express") && (ccInfo.cardNumber.startsWith("34") || ccInfo.cardNumber.startsWith("37") && ccInfo.cardNumber.length() == 15))
             return true;
-        else if (ccInfo.cardType.equals("Visa") && ccInfo.cardNumber.startsWith("4"))
+        else if (ccInfo.cardType.equals("Visa") && ccInfo.cardNumber.startsWith("4") && (ccInfo.cardNumber.length() == 13 || ccInfo.cardNumber.length() == 16))
             return true;
         else
-            return ccInfo.cardType.equals("Master Card") && (ccInfo.cardNumber.startsWith("51") || ccInfo.cardNumber.startsWith("52") || ccInfo.cardNumber.startsWith("53") || ccInfo.cardNumber.startsWith("54") || ccInfo.cardNumber.startsWith("55"));
+            return ccInfo.cardType.equals("Master Card") && (ccInfo.cardNumber.startsWith("51") || ccInfo.cardNumber.startsWith("52") || ccInfo.cardNumber.startsWith("53") || ccInfo.cardNumber.startsWith("54") || ccInfo.cardNumber.startsWith("55")) && ccInfo.cardNumber.length() == 16;
     }
 
     public Transaction auth(CCInfo info) {
