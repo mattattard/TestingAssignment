@@ -2,16 +2,19 @@ public class PaymentProcessor {
 
     String dateToday;
     BankProxy bankProxy;
+    TransactionDatabase transDB;
 
     PaymentProcessor() {
         this.dateToday = "11/18";
+        transDB = new TransactionDatabase();
     }
 
     PaymentProcessor(String dateToday) {
         this.dateToday = dateToday;
+
     }
 
-    PaymentProcessor(BankProxy bankProxy){
+    PaymentProcessor(BankProxy bankProxy) {
         this.bankProxy = bankProxy;
     }
 
@@ -42,7 +45,12 @@ public class PaymentProcessor {
             System.out.println("The Verification of the Card has not ended successfully.");
             return 1;
         }
-
+        Transaction transaction = auth(ccInfo);
+        if(transaction == null ){
+            return  2;
+        }else{
+            transDB.addTransaction(transaction);
+        }
         return 0;
     }
 
@@ -124,17 +132,21 @@ public class PaymentProcessor {
             return ccInfo.cardType.equals("Master Card") && (ccInfo.cardNumber.startsWith("51") || ccInfo.cardNumber.startsWith("52") || ccInfo.cardNumber.startsWith("53") || ccInfo.cardNumber.startsWith("54") || ccInfo.cardNumber.startsWith("55"));
     }
 
-    public void auth(CCInfo info){
-       long transID =  bankProxy.auth(info, 1000);
-       if(transID > 0){
-            Transaction transaction = new Transaction(transID,info,1000,"auth");
-       }else if(transID == -1){
-
-       }else if (transID == -2){
-
-       }else if(transID == -3){
-
-       }
+    public Transaction auth(CCInfo info) {
+        long transID = bankProxy.auth(info, 1000);
+        Transaction transaction;
+        if (transID > 0) {
+            transaction = new Transaction(transID, info, 1000, "auth");
+        } else if (transID == -1) {
+            transaction = null;
+        } else if (transID == -2) {
+            transaction = null;
+        } else if (transID == -3) {
+            transaction = null;
+        } else{
+            transaction = null;
+        }
+        return transaction;
     }
 
 }

@@ -12,7 +12,7 @@ public class TransactionDatabase {
         transactionHashMap.put(transaction.id, transaction);
     }
 
-    public int sizeOfDatabasse(){
+    public int sizeOfDatabase(){
         return transactionHashMap.size();
     }
 

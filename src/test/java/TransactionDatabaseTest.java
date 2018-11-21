@@ -25,7 +25,7 @@ public class TransactionDatabaseTest {
 
         transactionDatabase.addTransaction(transaction);
 
-        assertEquals(1, transactionDatabase.sizeOfDatabasse());
+        assertEquals(1, transactionDatabase.sizeOfDatabase());
     }
 
     @Test
@@ -38,7 +38,7 @@ public class TransactionDatabaseTest {
         transactionDatabase.addTransaction(transaction);
         transactionDatabase.addTransaction(transaction1);
 
-        assertEquals(2, transactionDatabase.sizeOfDatabasse());
+        assertEquals(2, transactionDatabase.sizeOfDatabase());
     }
 
     @Test
@@ -51,7 +51,7 @@ public class TransactionDatabaseTest {
         transactionDatabase.addTransaction(transaction);
         transactionDatabase.addTransaction(transaction1);
 
-        assertEquals(1,transactionDatabase.sizeOfDatabasse());
+        assertEquals(1,transactionDatabase.sizeOfDatabase());
     }
 
 }
