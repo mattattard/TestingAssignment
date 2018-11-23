@@ -46,9 +46,9 @@ public class PaymentProcessor {
             return 1;
         }
         Object transaction = auth(ccInfo);
-        if(transaction instanceof Transaction){
+        if (transaction instanceof Transaction) {
             transDB.addTransaction((Transaction) transaction);
-        }else{
+        } else {
             System.out.println(transaction);
             return 2;
         }
@@ -144,14 +144,63 @@ public class PaymentProcessor {
             return "Credit card details are valid but the customer does not have enough funds ";
         } else if (transID == -3) {
             return "Unknown error occurred";
-        } else{
+        } else {
             return "Unknown error occurred";
         }
         return transaction;
     }
 
-    public Object caputre(){
-        return null;
+    public String caputre(long transId) {
+        int result = bankProxy.capture(transId);
+        if (result == 0) {
+            return "Successful";
+        } else if (result == -1) {
+            return "Transaction already exist but has already been captured";
+        } else if (result == -2) {
+            return "Transaction exists but has already been captured";
+        } else if (result == -3) {
+            return "Transaction exists but the 7 day period has expired resulting in the transaction being voided";
+        } else if (result == -4) {
+            return "Unknown error has occurred";
+        }
+        return "";
     }
 
+    public void capture(Transaction transaction) {
+        String result = caputre(transaction.id);
+        if (result.equals("Successful")) {
+            transaction.state = "Capture";
+            transDB.addTransaction(transaction);
+        } else {
+            System.out.println(result);
+        }
+    }
+
+    public String refund(long transId, long amount) {
+        int result = bankProxy.refund(transId, amount);
+        if (result == 0) {
+            return "Successful";
+        } else if (result == -1) {
+            return "Transaction does not exist";
+        } else if (result == -2) {
+            return "Transaction exists but has not been captured";
+        } else if (result == -3) {
+            return "Trnasaction exists but  a refund has already been processed against it";
+        } else if (result == -4) {
+            return "Refund amount is greater than the captured amount";
+        } else if (result == -5) {
+            return "Unknown error occurred";
+        }
+        return "";
+    }
+
+    public void refund(Transaction transaction, long amount) {
+        String result = refund(transaction.id, amount);
+        if (result.equals("Successful")) {
+            transaction.state = "Refund";
+            transDB.addTransaction(transaction);
+        } else {
+            System.out.println(result);
+        }
+    }
 }
