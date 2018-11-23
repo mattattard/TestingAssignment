@@ -45,11 +45,12 @@ public class PaymentProcessor {
             System.out.println("The Verification of the Card has not ended successfully.");
             return 1;
         }
-        Transaction transaction = auth(ccInfo);
-        if(transaction == null ){
-            return  2;
+        Object transaction = auth(ccInfo);
+        if(transaction instanceof Transaction){
+            transDB.addTransaction((Transaction) transaction);
         }else{
-            transDB.addTransaction(transaction);
+            System.out.println(transaction);
+            return 2;
         }
         return 0;
     }
@@ -132,21 +133,25 @@ public class PaymentProcessor {
             return ccInfo.cardType.equals("Master Card") && (ccInfo.cardNumber.startsWith("51") || ccInfo.cardNumber.startsWith("52") || ccInfo.cardNumber.startsWith("53") || ccInfo.cardNumber.startsWith("54") || ccInfo.cardNumber.startsWith("55")) && ccInfo.cardNumber.length() == 16;
     }
 
-    public Transaction auth(CCInfo info) {
+    public Object auth(CCInfo info) {
         long transID = bankProxy.auth(info, 1000);
         Transaction transaction;
         if (transID > 0) {
             transaction = new Transaction(transID, info, 1000, "auth");
         } else if (transID == -1) {
-            transaction = null;
+            return "Credit card details are invalid in any way";
         } else if (transID == -2) {
-            transaction = null;
+            return "Credit card details are valid but the customer does not have enough funds ";
         } else if (transID == -3) {
-            transaction = null;
+            return "Unknown error occurred";
         } else{
-            transaction = null;
+            return "Unknown error occurred";
         }
         return transaction;
+    }
+
+    public Object caputre(){
+        return null;
     }
 
 }
