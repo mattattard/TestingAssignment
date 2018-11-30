@@ -1,8 +1,7 @@
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class TransactionDatabaseTest {
 
@@ -25,7 +24,7 @@ public class TransactionDatabaseTest {
 
         transactionDatabase.addTransaction(transaction);
 
-        assertEquals(1, transactionDatabase.sizeOfDatabase());
+        Assert.assertEquals(1, transactionDatabase.sizeOfDatabase());
     }
 
     @Test
@@ -38,7 +37,7 @@ public class TransactionDatabaseTest {
         transactionDatabase.addTransaction(transaction);
         transactionDatabase.addTransaction(transaction1);
 
-        assertEquals(2, transactionDatabase.sizeOfDatabase());
+        Assert.assertEquals(2, transactionDatabase.sizeOfDatabase());
     }
 
     @Test
@@ -51,7 +50,7 @@ public class TransactionDatabaseTest {
         transactionDatabase.addTransaction(transaction);
         transactionDatabase.addTransaction(transaction1);
 
-        assertEquals(1,transactionDatabase.sizeOfDatabase());
+        Assert.assertEquals(1,transactionDatabase.sizeOfDatabase());
     }
 
 }
