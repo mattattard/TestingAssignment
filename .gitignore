@@ -3,3 +3,14 @@
 *.xml
 *.class
 .idea/workspace.xml
+target/classes/PaymentProcessor.class
+target/classes/PaymentProcessor.class
+target/classes/PaymentProcessor.class
+target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
+target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+target/classes/PaymentProcessor.class
+target/surefire-reports/PaymentProcessorTest.txt
+target/test-classes/PaymentProcessorTest.class
+target/classes/PaymentProcessor.class

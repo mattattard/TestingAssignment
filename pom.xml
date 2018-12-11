@@ -7,6 +7,7 @@
     <groupId>CPS3230</groupId>
     <artifactId>TestingAssignment</artifactId>
     <version>1.0</version>
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
@@ -28,6 +29,28 @@
             <artifactId>modeljunit</artifactId>
             <version>2.5</version>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.1</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
