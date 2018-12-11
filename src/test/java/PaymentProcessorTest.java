@@ -261,6 +261,11 @@ public class PaymentProcessorTest {
 
         assertFalse(result);
     }
+
+    @Test
+    public void TestCaptureSuccesfulResult(){
+        paymentProcessor = new PaymentProcessor();
+    }
 //    @Test
 //    public void TestMasterCardCorrect() {
 //        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "5555555555554444", "8/19", "875");

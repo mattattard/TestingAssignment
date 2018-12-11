@@ -150,7 +150,7 @@ public class PaymentProcessor {
         return transaction;
     }
 
-    public String caputre(long transId) {
+    public String capture(long transId) {
         int result = bankProxy.capture(transId);
         if (result == 0) {
             return "Successful";
@@ -167,7 +167,7 @@ public class PaymentProcessor {
     }
 
     public void capture(Transaction transaction) {
-        String result = caputre(transaction.id);
+        String result = capture(transaction.id);
         if (result.equals("Successful")) {
             transaction.state = "Capture";
             transDB.addTransaction(transaction);
