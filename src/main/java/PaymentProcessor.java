@@ -3,17 +3,16 @@ public class PaymentProcessor {
     String dateToday;
     BankProxy bankProxy;
     TransactionDatabase transDB;
+    Transaction transaction;
 
     PaymentProcessor() {
         this.dateToday = "11/18";
         transDB = new TransactionDatabase();
+        transaction = new Transaction();
     }
-
     PaymentProcessor(String dateToday) {
         this.dateToday = dateToday;
-
     }
-
     PaymentProcessor(BankProxy bankProxy) {
         this.bankProxy = bankProxy;
     }
@@ -150,6 +149,16 @@ public class PaymentProcessor {
         return transaction;
     }
 
+    public void refund(Transaction transaction, long amount) {
+        String result = refund(transaction.id, amount);
+        if (result.equals("Successful")) {
+            transaction.state = "Refund";
+            transDB.addTransaction(transaction);
+        } else {
+            System.out.println(result);
+        }
+    }
+
     public String capture(long transId) {
         int result = bankProxy.capture(transId);
         if (result == 0) {
@@ -185,22 +194,12 @@ public class PaymentProcessor {
         } else if (result == -2) {
             return "Transaction exists but has not been captured";
         } else if (result == -3) {
-            return "Trnasaction exists but  a refund has already been processed against it";
+            return "Transaction exists but  a refund has already been processed against it";
         } else if (result == -4) {
             return "Refund amount is greater than the captured amount";
         } else if (result == -5) {
             return "Unknown error occurred";
         }
         return "";
-    }
-
-    public void refund(Transaction transaction, long amount) {
-        String result = refund(transaction.id, amount);
-        if (result.equals("Successful")) {
-            transaction.state = "Refund";
-            transDB.addTransaction(transaction);
-        } else {
-            System.out.println(result);
-        }
     }
 }
