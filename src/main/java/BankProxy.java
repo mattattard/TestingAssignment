@@ -1,3 +1,4 @@
+
 public interface BankProxy {
     long auth(CCInfo ccInfo, long num);
     int capture(long num);
