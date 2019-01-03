@@ -4,6 +4,7 @@
     <title>Failed</title>
 </head>
 <body>
-    <p id="result">Not Successful</p>
+    <h1 id="result"><%= request.getAttribute("result") %></h1>
+    <p id="message">Not Successful</p>
 </body>
 </html>
