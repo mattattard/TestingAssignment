@@ -27,7 +27,7 @@
             <br>
             Amount: <input type = "text" name = "amount">
             <br>
-            <input type = "submit" value = "Submit" />
+            <input type = "submit" value = "Submit" name="submit"/>
         </form>
     </body>
 </html>

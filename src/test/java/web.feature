@@ -10,15 +10,16 @@
       Then      I should be told that the payment was successful
 
 
-    Scenario Outline:  Any Field is left empty
+    Scenario Outline:  When a field is left empty :
       Given     I am a user trying to process a payment
-      When      I submit a form with all data except <fieldname>
-      Then      I should be told that <fieldname> is required
+      When      I submit a form with all data except <field>
+      Then      I should be told that <field> is required
 
       Examples:
-      |fieldname|
-      | name |
-      | address |
-      | card |
-      | expiry |
-      | cvv |
+        | field     |
+        | name      |
+        | address   |
+        | card      |
+        | expiry    |
+        | cvv       |
+        | amount    |
