@@ -143,7 +143,7 @@ public class WebSteps {
         driver.quit();
     }
 
-    @When("^I fill in the form and click on the clear button$")
+    @When("^I fill in the form$")
     public void iFillInTheFormAndClickOnTheClearButton(){
         driver.findElement(By.name("name")).sendKeys("Johny Boy");
         driver.findElement(By.name("address")).sendKeys("4 november");
@@ -153,7 +153,10 @@ public class WebSteps {
         driver.findElement(By.name("expiry")).sendKeys("2234");
         driver.findElement(By.name("cvv")).sendKeys("745");
         driver.findElement(By.name("amount")).sendKeys("15320");
-        driver.findElement(By.name("clear")).click();
+    }
+    @When("^Click on the clear button$")
+    public void clickOnTheClearButton(){
+        driver.findElement(By.id("clear")).click();
     }
 
     @Then("^The form data should be cleared$")
