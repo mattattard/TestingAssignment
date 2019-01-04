@@ -97,4 +97,41 @@ public class WebSteps {
         Assert.assertEquals("Error processing your transaction", result);
         driver.quit();
     }
+
+    @When("^I submit correct details using a <card-type> card$")
+    public void iSubmitCorrectDetailsUsingACardtypeCard(String type){
+        if(type.equals("americanexpress")){
+            driver.findElement(By.name("name")).sendKeys("Joe Vella");
+            driver.findElement(By.name("address")).sendKeys("jksdjkgj");
+            driver.findElement(By.name("card")).sendKeys("378282246310005");
+            driver.findElement(By.name("expiry")).sendKeys("fsdfdsf");
+            driver.findElement(By.name("cvv")).sendKeys("745");
+            driver.findElement(By.name("amount")).sendKeys("15320");
+            driver.findElement(By.name("submit")).click();
+        }
+        if(type.equals("mastercard")){
+            driver.findElement(By.name("name")).sendKeys("Joe Vella");
+            driver.findElement(By.name("address")).sendKeys("jksdjkgj");
+            driver.findElement(By.name("card")).sendKeys("5182382246310005");
+            driver.findElement(By.name("expiry")).sendKeys("fsdfdsf");
+            driver.findElement(By.name("cvv")).sendKeys("745");
+            driver.findElement(By.name("amount")).sendKeys("15320");
+            driver.findElement(By.name("submit")).click();
+        }
+        if(type.equals("VISA")){
+            driver.findElement(By.name("name")).sendKeys("Joe Vella");
+            driver.findElement(By.name("address")).sendKeys("jksdjkgj");
+            driver.findElement(By.name("card")).sendKeys("4182382246310005");
+            driver.findElement(By.name("expiry")).sendKeys("fsdfdsf");
+            driver.findElement(By.name("cvv")).sendKeys("745");
+            driver.findElement(By.name("amount")).sendKeys("15320");
+            driver.findElement(By.name("submit")).click();
+        }
+    }
+    @Then("^I should be told that the payment was successful$")
+    public void iShouldBeToldThatThePaymentWasSuccessful(String type){
+        String result = driver.findElement(By.id("result")).getText();
+        Assert.assertEquals("Payment Succesful", result);
+        driver.quit();
+    }
 }
