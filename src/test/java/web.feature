@@ -31,13 +31,13 @@
       Then  I should be told that there was an error processing my transaction
 
 
-    Scenario Outline:
+    Scenario Outline: Entering values according to the card type:
      Given I am a user trying to process a payment
-     When I submit correct details using a <card-type> card
+     When I submit correct details using a "<card-type>" card
      Then I should be told that the payment was successful
 
       Examples:
       | card-type |
-      | americanexpress |
-      | mastercard |
-      | VISA |
+      | American Express |
+      | Master Card |
+      | Visa |
