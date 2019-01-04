@@ -25,19 +25,25 @@
         | amount    |
 
 
-    Scenario:
+    Scenario: Invalid Data entry
       Given I am a user trying to process a payment
       When  I submit a form with any invalid that which the processing system rejects
       Then  I should be told that there was an error processing my transaction
 
 
-    Scenario Outline:
-     Given I am a user trying to process a payment
-     When I submit correct details using a <card-type> card
-     Then I should be told that the payment was successful
+    Scenario Outline: Correct card type submission
+     Given  I am a user trying to process a payment
+     When   I submit correct details using a <card-type> card
+     Then   I should be told that the payment was successful
 
-      Examples:
+     Examples:
       | card-type |
       | americanexpress |
       | mastercard |
       | VISA |
+
+    Scenario: Clear the form
+      Given I am a user trying to process a payment
+      When  I fill in the form
+      And   click on the clear button
+      Then  the form data should be cleared

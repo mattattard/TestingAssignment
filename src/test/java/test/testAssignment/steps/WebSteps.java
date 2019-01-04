@@ -7,7 +7,9 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 
 public class WebSteps {
 
@@ -103,6 +105,8 @@ public class WebSteps {
         if(type.equals("americanexpress")){
             driver.findElement(By.name("name")).sendKeys("Joe Vella");
             driver.findElement(By.name("address")).sendKeys("jksdjkgj");
+            Select dropdown = new Select(driver.findElement(By.id("cardType")));
+            dropdown.selectByVisibleText("American Express");
             driver.findElement(By.name("card")).sendKeys("378282246310005");
             driver.findElement(By.name("expiry")).sendKeys("fsdfdsf");
             driver.findElement(By.name("cvv")).sendKeys("745");
@@ -112,6 +116,8 @@ public class WebSteps {
         if(type.equals("mastercard")){
             driver.findElement(By.name("name")).sendKeys("Joe Vella");
             driver.findElement(By.name("address")).sendKeys("jksdjkgj");
+            Select dropdown = new Select(driver.findElement(By.id("cardType")));
+            dropdown.selectByVisibleText("MasterCard");
             driver.findElement(By.name("card")).sendKeys("5182382246310005");
             driver.findElement(By.name("expiry")).sendKeys("fsdfdsf");
             driver.findElement(By.name("cvv")).sendKeys("745");
@@ -121,6 +127,8 @@ public class WebSteps {
         if(type.equals("VISA")){
             driver.findElement(By.name("name")).sendKeys("Joe Vella");
             driver.findElement(By.name("address")).sendKeys("jksdjkgj");
+            Select dropdown = new Select(driver.findElement(By.id("cardType")));
+            dropdown.selectByVisibleText("Visa");
             driver.findElement(By.name("card")).sendKeys("4182382246310005");
             driver.findElement(By.name("expiry")).sendKeys("fsdfdsf");
             driver.findElement(By.name("cvv")).sendKeys("745");
