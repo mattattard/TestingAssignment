@@ -27,7 +27,8 @@
             <br>
             Amount: <input type = "text" name = "amount">
             <br>
-            <input type = "submit" value = "Submit" name="submit"/>
+            <button type = "submit" value = "Submit" name="submit">Submit</button>
+            <button type = "reset" value = "Reset" name="clear">Clear</button>
         </form>
     </body>
 </html>

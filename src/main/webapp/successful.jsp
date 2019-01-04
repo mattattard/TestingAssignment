@@ -4,6 +4,6 @@
     <title>Successful</title>
 </head>
 <body>
-    <p id="result">Successful</p>
+    <p id="result">The payment was Successful</p>
 </body>
 </html>
