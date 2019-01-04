@@ -6,6 +6,7 @@ import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
@@ -105,7 +106,13 @@ public class WebSteps {
         select.selectByVisibleText(type);
         if(type.equals("American Express")){
             driver.findElement(By.name("name")).sendKeys("Joe Vella");
+<<<<<<< HEAD
             driver.findElement(By.name("address")).sendKeys("ABC");
+=======
+            driver.findElement(By.name("address")).sendKeys("jksdjkgj");
+            Select dropdown = new Select(driver.findElement(By.id("cardType")));
+            dropdown.selectByVisibleText("American Express");
+>>>>>>> 59d9f0f1b70fcbe90ba61fe6ef7d2474bcb38b54
             driver.findElement(By.name("card")).sendKeys("378282246310005");
             driver.findElement(By.name("expiry")).sendKeys("8/19");
             driver.findElement(By.name("cvv")).sendKeys("745");
@@ -114,22 +121,62 @@ public class WebSteps {
         }
         if(type.equals("Master Card")){
             driver.findElement(By.name("name")).sendKeys("Joe Vella");
+<<<<<<< HEAD
             driver.findElement(By.name("address")).sendKeys("ABC");
             driver.findElement(By.name("card")).sendKeys("5555555555554444");
             driver.findElement(By.name("expiry")).sendKeys("8/19");
+=======
+            driver.findElement(By.name("address")).sendKeys("jksdjkgj");
+            Select dropdown = new Select(driver.findElement(By.id("cardType")));
+            dropdown.selectByVisibleText("MasterCard");
+            driver.findElement(By.name("card")).sendKeys("5182382246310005");
+            driver.findElement(By.name("expiry")).sendKeys("fsdfdsf");
+>>>>>>> 59d9f0f1b70fcbe90ba61fe6ef7d2474bcb38b54
             driver.findElement(By.name("cvv")).sendKeys("745");
             driver.findElement(By.name("amount")).sendKeys("15320");
             driver.findElement(By.name("submit")).click();
         }
         if(type.equals("Visa")){
             driver.findElement(By.name("name")).sendKeys("Joe Vella");
+<<<<<<< HEAD
             driver.findElement(By.name("address")).sendKeys("ABC");
             driver.findElement(By.name("card")).sendKeys("4111111111111111");
             driver.findElement(By.name("expiry")).sendKeys("8/19");
+=======
+            driver.findElement(By.name("address")).sendKeys("jksdjkgj");
+            Select dropdown = new Select(driver.findElement(By.id("cardType")));
+            dropdown.selectByVisibleText("Visa");
+            driver.findElement(By.name("card")).sendKeys("4182382246310005");
+            driver.findElement(By.name("expiry")).sendKeys("fsdfdsf");
+>>>>>>> 59d9f0f1b70fcbe90ba61fe6ef7d2474bcb38b54
             driver.findElement(By.name("cvv")).sendKeys("745");
             driver.findElement(By.name("amount")).sendKeys("15320");
             driver.findElement(By.name("submit")).click();
         }
         sleep(5);
+    }
+
+    @When("^I fill in the form and click on the clear button$")
+    public void iFillInTheFormAndClickOnTheClearButton(){
+        driver.findElement(By.name("name")).sendKeys("Johny Boy");
+        driver.findElement(By.name("address")).sendKeys("4 november");
+        Select dropdown = new Select(driver.findElement(By.id("cardType")));
+        dropdown.selectByVisibleText("MasterCard");
+        driver.findElement(By.name("card")).sendKeys("5182382246310005");
+        driver.findElement(By.name("expiry")).sendKeys("2234");
+        driver.findElement(By.name("cvv")).sendKeys("745");
+        driver.findElement(By.name("amount")).sendKeys("15320");
+        driver.findElement(By.name("clear")).click();
+    }
+
+    @Then("^The form data should be cleared$")
+    public void theFormDataShouldBeCleared(){
+        String name = driver.findElement(By.name("name")).getText();
+        String address = driver.findElement(By.name("address")).getText();
+        String card = driver.findElement(By.name("card")).getText();
+        String expiry = driver.findElement(By.name("expiry")).getText();
+        String cvv = driver.findElement(By.name("cvv")).getText();
+        String amount = driver.findElement(By.name("amount")).getText();
+        Assert.assertEquals("", name+address+card+expiry+card+cvv+amount);
     }
 }
