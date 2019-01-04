@@ -1,6 +1,5 @@
 package test.testAssignment.steps;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -29,10 +28,10 @@ public class WebSteps {
 
     @When("^I submit correct details$")
     public void i_submit_correct_details(){
-        driver.findElement(By.name("name")).sendKeys("Matthew Attard");
-        driver.findElement(By.name("address")).sendKeys("jksdjkgj");
-        driver.findElement(By.name("card")).sendKeys("378282246310005");
-        driver.findElement(By.name("expiry")).sendKeys("fsdfdsf");
+        driver.findElement(By.name("name")).sendKeys("XYZ");
+        driver.findElement(By.name("address")).sendKeys("ABZ");
+        driver.findElement(By.name("card")).sendKeys("4111111111111111");
+        driver.findElement(By.name("expiry")).sendKeys("8/19");
         driver.findElement(By.name("cvv")).sendKeys("745");
         driver.findElement(By.name("amount")).sendKeys("15320");
         driver.findElement(By.name("submit")).click();
@@ -95,6 +94,7 @@ public class WebSteps {
     @Then("^I should be told that there was an error processing my transaction$")
     public void iShouldBeToldThatThereWasAnErrorProcessingMyTransaction(){
         String result = driver.findElement(By.id("result")).getText();
-        Assert.assertEquals("1", result);
+        Assert.assertEquals("Error processing your transaction", result);
+        driver.quit();
     }
 }

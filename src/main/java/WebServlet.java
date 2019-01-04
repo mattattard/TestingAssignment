@@ -34,7 +34,7 @@ public class WebServlet extends HttpServlet {
                 request.getRequestDispatcher("/successful.jsp").forward(request,response);
             }else {
                 String message = "Error processing your transaction";
-                request.setAttribute("result ", message);
+                request.setAttribute("result", message);
                 request.getRequestDispatcher("/failed.jsp").forward(request,response);
             }
         }else {
