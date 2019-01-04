@@ -13,6 +13,7 @@ public class WebSteps {
 
     WebDriver driver;
 
+
     public void sleep(int seconds) {
         try {
             Thread.sleep(seconds*1000);
@@ -77,5 +78,23 @@ public class WebSteps {
         String actualText = driver.findElement(By.id("result")).getText();
         Assert.assertTrue("Payment not successful Successful",actualText.contains(expectedTest));
         driver.quit();
+    }
+
+    @When("^I submit a form with any invalid that which the processing system rejects$")
+    public void iSubmitAFormWithAnyInvalidThatWhichTheProcessingSystemRejects(){
+        driver.findElement(By.name("name")).sendKeys("Joe Vella");
+        driver.findElement(By.name("address")).sendKeys("jksdjkgj");
+        driver.findElement(By.name("card")).sendKeys("378282246310005");
+        driver.findElement(By.name("expiry")).sendKeys("fsdfdsf");
+        driver.findElement(By.name("cvv")).sendKeys("745");
+        driver.findElement(By.name("amount")).sendKeys("15320");
+        driver.findElement(By.name("submit")).click();
+        sleep(5);
+    }
+
+    @Then("^I should be told that there was an error processing my transaction$")
+    public void iShouldBeToldThatThereWasAnErrorProcessingMyTransaction(){
+        String result = driver.findElement(By.id("result")).getText();
+        Assert.assertEquals("1", result);
     }
 }

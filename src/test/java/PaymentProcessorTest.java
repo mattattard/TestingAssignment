@@ -148,7 +148,7 @@ public class PaymentProcessorTest {
 
 
     @Test
-    public void TestProcessPaymentFailOffLineVerification(){
+    public void TestProcessPaymentInvalidDataEntry(){
         CCInfo ccInfo = new CCInfo("XYZ", "ABC", "American Express", "378282246310005", "8/17", "875");
 
         int result = paymentProcessor.processPayment(ccInfo, 201);
