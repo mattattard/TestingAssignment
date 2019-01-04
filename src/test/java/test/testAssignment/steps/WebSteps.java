@@ -156,7 +156,8 @@ public class WebSteps {
         String expiry = driver.findElement(By.name("expiry")).getText();
         String cvv = driver.findElement(By.name("cvv")).getText();
         String amount = driver.findElement(By.name("amount")).getText();
-        Assert.assertEquals("", name+address+card+expiry+card+cvv+amount);
+        Assert.assertEquals("", name + address + card + expiry + card + cvv + amount);
+        driver.quit();
     }
 
     @When("^I fill in the form$")
