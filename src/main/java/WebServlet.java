@@ -27,13 +27,20 @@ public class WebServlet extends HttpServlet {
         String amount = request.getParameter("amount");
         System.out.println(name +"\n" + address + "\n" + card +"\n" + cardType + "\n" + expiry + "\n" + cvv + "\n" + amount);
         if(error.isEmpty()){
-            request.getRequestDispatcher("/successful.jsp").forward(request,response);
+            CCInfo info = new CCInfo(name,address,cardType,card,expiry,cvv);
+            PaymentProcessor paymentProcessor = new PaymentProcessor();
+            int result = paymentProcessor.processPayment(info,Integer.parseInt(amount));
+            if(result == 0){
+                request.getRequestDispatcher("/successful.jsp").forward(request,response);
+            }else {
+                String message = "Error processing your transaction";
+                request.setAttribute("result ", message);
+                request.getRequestDispatcher("/failed.jsp").forward(request,response);
+            }
         }else {
             String message = "These were found missing :" + error.toString();
             request.setAttribute("result", message );
             request.getRequestDispatcher("/failed.jsp").forward(request,response);
         }
-
-
     }
 }

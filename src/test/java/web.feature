@@ -12,11 +12,11 @@
 
     Scenario Outline:  When a field is left empty :
       Given     I am a user trying to process a payment
-      When      I submit a form with all data except <field>
-      Then      I should be told that <field> is required
+      When      I submit a form with all data except "<fieldName>"
+      Then      I should be told that "<fieldName>" is required
 
       Examples:
-        | field     |
+        | fieldName     |
         | name      |
         | address   |
         | card      |

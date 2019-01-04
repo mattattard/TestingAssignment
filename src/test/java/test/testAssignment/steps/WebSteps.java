@@ -1,5 +1,6 @@
 package test.testAssignment.steps;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -39,15 +40,15 @@ public class WebSteps {
 
     @Then("^I should be told that the payment was successful$")
     public void i_should_be_told_that_the_payment_was_successful(){
-        String expectedTest = "Successful";
+        String expectedTest = "The payment was Successful";
         String actualText = driver.findElement(By.id("result")).getText();
         Assert.assertTrue("Payment Successful",expectedTest.equals(actualText));
         driver.quit();
     }
 
-    @When("^I submit a form with all data except <field>$")
-    public void iSubmitAFormWithAllDataExceptField(String field) {
-        System.out.println(field);
+
+    @When("^I submit a form with all data except \"([^\"]*)\"$")
+    public void iSubmitAFormWithAllDataExcept(String field) throws Throwable {
         if(!field.equals("name")){
             driver.findElement(By.name("name")).sendKeys("John Abela");
         }
@@ -70,11 +71,11 @@ public class WebSteps {
         sleep(5);
     }
 
-    @Then("^I should be told that <field> is required$")
-    public void iShouldBeToldThatFieldIsRequired(String field) {
+    @Then("^I should be told that \"([^\"]*)\" is required$")
+    public void iShouldBeToldThatIsRequired(String field) throws Throwable {
         String expectedTest = field;
-        String actualText = driver.findElement(By.name("result")).getText();
-        Assert.assertTrue("Payment Successful",expectedTest.contains(actualText));
+        String actualText = driver.findElement(By.id("result")).getText();
+        Assert.assertTrue("Payment not successful Successful",actualText.contains(expectedTest));
         driver.quit();
     }
 }
