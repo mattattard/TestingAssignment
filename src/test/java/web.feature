@@ -46,5 +46,5 @@
     Scenario: Clear the form
       Given I am a user trying to process a payment
       When  I fill in the form
-      And   click on the clear button
-      Then  the form data should be cleared
+      And   Click on the clear button
+      Then  The form data should be cleared

@@ -142,4 +142,28 @@ public class WebSteps {
         Assert.assertEquals("Payment Succesful", result);
         driver.quit();
     }
+
+    @When("^I fill in the form and click on the clear button$")
+    public void iFillInTheFormAndClickOnTheClearButton(){
+        driver.findElement(By.name("name")).sendKeys("Johny Boy");
+        driver.findElement(By.name("address")).sendKeys("4 november");
+        Select dropdown = new Select(driver.findElement(By.id("cardType")));
+        dropdown.selectByVisibleText("MasterCard");
+        driver.findElement(By.name("card")).sendKeys("5182382246310005");
+        driver.findElement(By.name("expiry")).sendKeys("2234");
+        driver.findElement(By.name("cvv")).sendKeys("745");
+        driver.findElement(By.name("amount")).sendKeys("15320");
+        driver.findElement(By.name("clear")).click();
+    }
+
+    @Then("^The form data should be cleared$")
+    public void theFormDataShouldBeCleared(){
+        String name = driver.findElement(By.name("name")).getText();
+        String address = driver.findElement(By.name("address")).getText();
+        String card = driver.findElement(By.name("card")).getText();
+        String expiry = driver.findElement(By.name("expiry")).getText();
+        String cvv = driver.findElement(By.name("cvv")).getText();
+        String amount = driver.findElement(By.name("amount")).getText();
+        Assert.assertEquals("", name+address+card+expiry+card+cvv+amount);
+    }
 }
