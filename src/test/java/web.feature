@@ -25,7 +25,8 @@
         | amount    |
 
 
-    Scenario: Invalid Data entry
+
+    Scenario: Entering details incorrect
       Given I am a user trying to process a payment
       When  I submit a form with any invalid that which the processing system rejects
       Then  I should be told that there was an error processing my transaction

@@ -9,6 +9,22 @@ public class PaymentProcessor {
         this.dateToday = "11/18";
         transDB = new TransactionDatabase();
         transaction = new Transaction();
+        bankProxy = new BankProxy() {
+            @Override
+            public long auth(CCInfo ccInfo, long num) {
+                return 1000;
+            }
+
+            @Override
+            public int capture(long num) {
+                return 0;
+            }
+
+            @Override
+            public int refund(long num1, long num2) {
+                return 0;
+            }
+        };
     }
     PaymentProcessor(String dateToday) {
         this.dateToday = dateToday;
