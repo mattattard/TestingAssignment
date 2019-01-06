@@ -210,7 +210,7 @@ public class PaymentProcessor {
         } else if (result == -2) {
             return "Transaction exists but has not been captured";
         } else if (result == -3) {
-            return "Transaction exists but  a refund has already been processed against it";
+            return "Transaction exists but a refund has already been processed against it";
         } else if (result == -4) {
             return "Refund amount is greater than the captured amount";
         } else if (result == -5) {
