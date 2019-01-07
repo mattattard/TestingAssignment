@@ -1,12 +1,12 @@
 package test.testAssignment.steps;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
@@ -86,7 +86,7 @@ public class WebSteps {
         driver.findElement(By.name("name")).sendKeys("Joe Vella");
         driver.findElement(By.name("address")).sendKeys("jksdjkgj");
         driver.findElement(By.name("card")).sendKeys("378282246310005");
-        driver.findElement(By.name("expiry")).sendKeys("fsdfdsf");
+        driver.findElement(By.name("expiry")).sendKeys("8/19");
         driver.findElement(By.name("cvv")).sendKeys("745");
         driver.findElement(By.name("amount")).sendKeys("15320");
         driver.findElement(By.name("submit")).click();
@@ -100,47 +100,39 @@ public class WebSteps {
         driver.quit();
     }
 
-    @When("^I submit correct details using a <card-type> card$")
+    @When("^I submit correct details using a \"([^\"]*)\" card$")
     public void iSubmitCorrectDetailsUsingACardtypeCard(String type){
-        if(type.equals("americanexpress")){
+        Select select = new Select(driver.findElement(By.name("cardType")));
+        select.selectByVisibleText(type);
+        if(type.equals("American Express")){
             driver.findElement(By.name("name")).sendKeys("Joe Vella");
-            driver.findElement(By.name("address")).sendKeys("jksdjkgj");
-            Select dropdown = new Select(driver.findElement(By.id("cardType")));
-            dropdown.selectByVisibleText("American Express");
+            driver.findElement(By.name("address")).sendKeys("ABC");
             driver.findElement(By.name("card")).sendKeys("378282246310005");
-            driver.findElement(By.name("expiry")).sendKeys("fsdfdsf");
+            driver.findElement(By.name("expiry")).sendKeys("8/19");
             driver.findElement(By.name("cvv")).sendKeys("745");
             driver.findElement(By.name("amount")).sendKeys("15320");
             driver.findElement(By.name("submit")).click();
         }
-        if(type.equals("mastercard")){
+        if(type.equals("Master Card")){
             driver.findElement(By.name("name")).sendKeys("Joe Vella");
+            driver.findElement(By.name("address")).sendKeys("ABC");
+            driver.findElement(By.name("card")).sendKeys("5555555555554444");
+            driver.findElement(By.name("expiry")).sendKeys("8/19");
             driver.findElement(By.name("address")).sendKeys("jksdjkgj");
-            Select dropdown = new Select(driver.findElement(By.id("cardType")));
-            dropdown.selectByVisibleText("MasterCard");
-            driver.findElement(By.name("card")).sendKeys("5182382246310005");
-            driver.findElement(By.name("expiry")).sendKeys("fsdfdsf");
             driver.findElement(By.name("cvv")).sendKeys("745");
             driver.findElement(By.name("amount")).sendKeys("15320");
             driver.findElement(By.name("submit")).click();
         }
-        if(type.equals("VISA")){
+        if(type.equals("Visa")){
             driver.findElement(By.name("name")).sendKeys("Joe Vella");
-            driver.findElement(By.name("address")).sendKeys("jksdjkgj");
-            Select dropdown = new Select(driver.findElement(By.id("cardType")));
-            dropdown.selectByVisibleText("Visa");
-            driver.findElement(By.name("card")).sendKeys("4182382246310005");
-            driver.findElement(By.name("expiry")).sendKeys("fsdfdsf");
+            driver.findElement(By.name("address")).sendKeys("ABC");
+            driver.findElement(By.name("card")).sendKeys("4111111111111111");
+            driver.findElement(By.name("expiry")).sendKeys("8/19");
             driver.findElement(By.name("cvv")).sendKeys("745");
             driver.findElement(By.name("amount")).sendKeys("15320");
             driver.findElement(By.name("submit")).click();
         }
-    }
-    @Then("^I should be told that the payment was successful$")
-    public void iShouldBeToldThatThePaymentWasSuccessful(String type){
-        String result = driver.findElement(By.id("result")).getText();
-        Assert.assertEquals("Payment Succesful", result);
-        driver.quit();
+        sleep(5);
     }
 
     @When("^I fill in the form$")
@@ -167,6 +159,22 @@ public class WebSteps {
         String expiry = driver.findElement(By.name("expiry")).getText();
         String cvv = driver.findElement(By.name("cvv")).getText();
         String amount = driver.findElement(By.name("amount")).getText();
-        Assert.assertEquals("", name+address+card+expiry+card+cvv+amount);
+        Assert.assertEquals("", name + address + card + expiry + card + cvv + amount);
+        driver.quit();
+    }
+
+    @When("^I fill in the form$")
+    public void iFillInTheForm() {
+        driver.findElement(By.name("name")).sendKeys("XYZ");
+        driver.findElement(By.name("address")).sendKeys("ABZ");
+        driver.findElement(By.name("card")).sendKeys("4111111111111111");
+        driver.findElement(By.name("expiry")).sendKeys("8/19");
+        driver.findElement(By.name("cvv")).sendKeys("745");
+        driver.findElement(By.name("amount")).sendKeys("15320");
+    }
+
+    @And("^Click on the clear button$")
+    public void clickOnTheClearButton() {
+        driver.findElement(By.name("clear")).click();
     }
 }

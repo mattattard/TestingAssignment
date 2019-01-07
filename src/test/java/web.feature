@@ -32,19 +32,21 @@
       Then  I should be told that there was an error processing my transaction
 
 
-    Scenario Outline: Correct card type submission
-     Given  I am a user trying to process a payment
-     When   I submit correct details using a <card-type> card
-     Then   I should be told that the payment was successful
+    Scenario Outline: Entering values according to the card type:
+     Given I am a user trying to process a payment
+     When I submit correct details using a "<card-type>" card
+     Then I should be told that the payment was successful
+
 
      Examples:
       | card-type |
-      | americanexpress |
-      | mastercard |
-      | VISA |
+      | American Express |
+      | Master Card |
+      | Visa |
 
     Scenario: Clear the form
       Given I am a user trying to process a payment
       When  I fill in the form
       And   Click on the clear button
       Then  The form data should be cleared
+

@@ -156,6 +156,16 @@ public class PaymentProcessorTest {
     }
 
     @Test
+    public void TestProcessPaymentSuccessful(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Master Card", "5555555555554444", "8/19", "875");
+        long transId = 1000;
+        BankProxy bankProxy = Mockito.mock(BankProxy.class);
+        Mockito.when(bankProxy.auth(ccInfo,transId)).thenReturn(transId);
+
+        assertEquals(0, paymentProcessor.processPayment(ccInfo, transId));
+    }
+
+    @Test
     public void TestCardNumberWithLengthFifteenAmericanExpress(){
         CCInfo ccInfo = new CCInfo("XYZ", "ABC", "American Express", "378282246310005", "8/17", "875");
 
@@ -304,21 +314,140 @@ public class PaymentProcessorTest {
         assertEquals("Unknown error occurred", paymentProcessor.auth(ccInfo));
     }
 
-//    @Test
-//    public void TestRefundSuccesful(){
-//        paymentProcessor = Mockito.mock(PaymentProcessor.class);
-//        Mockito.when(paymentProcessor.refund(1000, 300)).thenReturn("Successful");
-//        paymentProcessor = new PaymentProcessor();
-//
-//        assertEquals("Unknown error occurred", paymentProcessor.auth(ccInfo));
-//    }
-
-    /*@Test
-    public void TestRefundTransDoesNotExist(){
+    @Test
+    public void TestAuthSuccesful(){
+        CCInfo ccInfo = new CCInfo("XYZ", "ABC", "Visa", "411131231223123123123131232131231232132131", "8/19", "875");
         paymentProcessor = Mockito.mock(PaymentProcessor.class);
         Mockito.when(paymentProcessor.refund(1000, 300)).thenReturn("Successful");
         paymentProcessor = new PaymentProcessor();
 
-        assertTrue(paymentProcessor.refund(paymentProcessor.transaction,300).contains());
-    }*/
+        assertTrue(paymentProcessor.auth(ccInfo) instanceof Transaction);
+    }
+
+    @Test
+    public void TestSuccessfulCapture(){
+        long num = 100;
+        BankProxy bankProxy = Mockito.mock(BankProxy.class);
+        Mockito.when(bankProxy.capture(num)).thenReturn(0);
+
+        paymentProcessor = new PaymentProcessor(bankProxy);
+
+        assertEquals("Successful", paymentProcessor.capture(num));
+    }
+
+    @Test
+    public void TestCaptureTransactionExistsAndCaptured(){
+        long num = 100;
+        BankProxy bankProxy = Mockito.mock(BankProxy.class);
+        Mockito.when(bankProxy.capture(num)).thenReturn(-1);
+
+        paymentProcessor = new PaymentProcessor(bankProxy);
+
+        assertEquals("Transaction already exist but has already been captured", paymentProcessor.capture(num));
+    }
+
+    @Test
+    public void TestCaptureTransactionExistsAndCaptured2(){
+        long num = 100;
+        BankProxy bankProxy = Mockito.mock(BankProxy.class);
+        Mockito.when(bankProxy.capture(num)).thenReturn(-2);
+
+        paymentProcessor = new PaymentProcessor(bankProxy);
+
+        assertEquals("Transaction exists but has already been captured", paymentProcessor.capture(num));
+    }
+
+    @Test
+    public void TestCaptureTransactionBeingVoided(){
+        long num = 100;
+        BankProxy bankProxy = Mockito.mock(BankProxy.class);
+        Mockito.when(bankProxy.capture(num)).thenReturn(-3);
+
+        paymentProcessor = new PaymentProcessor(bankProxy);
+
+        assertEquals("Transaction exists but the 7 day period has expired resulting in the transaction being voided", paymentProcessor.capture(num));
+    }
+
+    @Test
+    public void TestCaptureUnknownError(){
+        long num = 100;
+        BankProxy bankProxy = Mockito.mock(BankProxy.class);
+        Mockito.when(bankProxy.capture(num)).thenReturn(-4);
+
+        paymentProcessor = new PaymentProcessor(bankProxy);
+
+        assertEquals("Unknown error has occurred", paymentProcessor.capture(num));
+    }
+
+    @Test
+    public void TestRefundSuccessful(){
+        long transId = 100;
+        long amount = 1000;
+        BankProxy bankProxy = Mockito.mock(BankProxy.class);
+        Mockito.when(bankProxy.refund(transId,amount)).thenReturn(0);
+
+        paymentProcessor = new PaymentProcessor(bankProxy);
+
+        assertEquals("Successful", paymentProcessor.refund(transId,amount));
+    }
+
+    @Test
+    public void TestRefundTransactionNotExist(){
+        long transId = 100;
+        long amount = 1000;
+        BankProxy bankProxy = Mockito.mock(BankProxy.class);
+        Mockito.when(bankProxy.refund(transId,amount)).thenReturn(-1);
+
+        paymentProcessor = new PaymentProcessor(bankProxy);
+
+        assertEquals("Transaction does not exist", paymentProcessor.refund(transId,amount));
+    }
+
+    @Test
+    public void TestRefundTransactionHasNotBeenCaptured(){
+        long transId = 100;
+        long amount = 1000;
+        BankProxy bankProxy = Mockito.mock(BankProxy.class);
+        Mockito.when(bankProxy.refund(transId,amount)).thenReturn(-2);
+
+        paymentProcessor = new PaymentProcessor(bankProxy);
+
+        assertEquals("Transaction exists but has not been captured", paymentProcessor.refund(transId,amount));
+    }
+
+    @Test
+    public void TestRefundTransactionExistButGivenARefund(){
+        long transId = 100;
+        long amount = 1000;
+        BankProxy bankProxy = Mockito.mock(BankProxy.class);
+        Mockito.when(bankProxy.refund(transId,amount)).thenReturn(-3);
+
+        paymentProcessor = new PaymentProcessor(bankProxy);
+
+        assertEquals("Transaction exists but a refund has already been processed against it", paymentProcessor.refund(transId,amount));
+    }
+
+    @Test
+    public void TestRefundAmountGreaterThanCaptureAmount(){
+        long transId = 100;
+        long amount = 1000;
+        BankProxy bankProxy = Mockito.mock(BankProxy.class);
+        Mockito.when(bankProxy.refund(transId,amount)).thenReturn(-4);
+
+        paymentProcessor = new PaymentProcessor(bankProxy);
+
+        assertEquals("Refund amount is greater than the captured amount", paymentProcessor.refund(transId,amount));
+    }
+
+    @Test
+    public void TestRefundUnknownErrorOccurred(){
+        long transId = 100;
+        long amount = 1000;
+        BankProxy bankProxy = Mockito.mock(BankProxy.class);
+        Mockito.when(bankProxy.refund(transId,amount)).thenReturn(-5);
+
+        paymentProcessor = new PaymentProcessor(bankProxy);
+
+        assertEquals("Unknown error occurred", paymentProcessor.refund(transId,amount));
+    }
 }

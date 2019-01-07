@@ -18,7 +18,7 @@
             Card Type: <select name="cardType">
                 <option value="Visa">Visa</option>
                 <option value="American Express">American Express</option>
-                <option value="MasterCard">MasterCard</option>
+                <option value="Master Card">Master Card</option>
             </select>
             <br>
             Expiry Date: <input type = "text" name = "expiry">
